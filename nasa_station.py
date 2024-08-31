@@ -18,7 +18,7 @@ def main():
     file.write(f'В настоящий момент на ISS {str(result["number"])} астронавтов \n\n')
     people = result['people']
     for person in people:
-        file.write(person['name'] + 'на борту' + '\n')
+        file.write(person['name'] + ' на борту' + '\n')
 
     g = geocoder.ipinfo()
     file.write(f'\nВаши текущие широта и долгота: {str(g.latlng)}')

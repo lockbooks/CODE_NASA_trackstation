@@ -1,16 +1,16 @@
 В настоящий момент на ISS 12 астронавтов 
 
-Oleg Kononenkoна борту
-Nikolai Chubна борту
-Tracy Caldwell Dysonна борту
-Matthew Dominickна борту
-Michael Barrattна борту
-Jeanette Eppsна борту
-Alexander Grebenkinна борту
-Butch Wilmoreна борту
-Sunita Williamsна борту
-Li Guangsuна борту
-Li Congна борту
-Ye Guangfuна борту
+Oleg Kononenko на борту
+Nikolai Chub на борту
+Tracy Caldwell Dyson на борту
+Matthew Dominick на борту
+Michael Barratt на борту
+Jeanette Epps на борту
+Alexander Grebenkin на борту
+Butch Wilmore на борту
+Sunita Williams на борту
+Li Guangsu на борту
+Li Cong на борту
+Ye Guangfu на борту
 
 Ваши текущие широта и долгота: [55.0415, 82.9346]
