@@ -75,9 +75,10 @@ def main():
         current_time = time.strftime("%Y-%m-%d %H:%M:%S")
         # Вывод на экран
         print("\nДата и время:", current_time)
-        # выводим широту и долготу в терминал
+        # переводим широту и долготу в числа с плавающей запятой
         lat = float(lat)
         lon = float(lon)
+        # выводим широту и долготу в терминал
         print(f'Широта: {str(lat)}')
         print(f'Долгота: {str(lon)}')
 
