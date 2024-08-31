@@ -8,14 +8,12 @@ import urllib.request
 import time
 # добавляем модуль для открытия URL-адресов по умолчанию
 import webbrowser
-# добавляем модуль геокодирования и перевода адресов в координаты
-import geocoder
 # модуль для использования возможностей операционной системы
 import os
 
 
 def main():
-    # Free API
+    # задаём адрес для запроса списка космонавтов
     url = 'http://api.open-notify.org/astros.json'
     # открываем URL, используя urllib.request
     res = urllib.request.urlopen(url)
@@ -23,50 +21,65 @@ def main():
     result = json.loads(res.read())
     # создаём текстовый файл с именами членов экипажа
     file = open('iss.txt', 'w')
-    file.write(f'В настоящий момент на ISS {str(result["number"])} астронавтов \n\n')
-    people = result['people']
-    for person in people:
-        file.write(person['name'] + ' на борту' + '\n')
 
-    g = geocoder.ipinfo()
-    file.write(f'\nВаши текущие широта и долгота: {str(g.latlng)}')
-    file.close()
+    # открываем файл для записи
+    with open('iss.txt', 'w') as file:
+        # добавляем запись
+        file.write(f'В настоящий момент на МКС {str(result["number"])} астронавтов:\n\n')
+        # получаем список имён космонавтов
+        people = result['people']
+        # для каждого человека в списке выводим его имя
+        for person in people:
+            file.write(person['name'] + '\n')
 
     # получаем абсолютный путь к файлу
     file_path = os.path.abspath('iss.txt')
-    # открываем файл браузером
-    # это будет выглядеть как обычный текстовый файл
+    # открываем файл в отдельном окне
     webbrowser.open(f'file://{file_path}')
 
     # устанавливем карту мира
     screen = turtle.Screen()
+    # устанавливаем размеры окна
     screen.setup(1280, 720)
+    # устанавливаем систему координат для экрана, аналогичную с координатами Земли
     screen.setworldcoordinates(-180, -90, 180, 90)
 
-    # загружааем изображение карты мира
+    # загружааем изображение карты мира из файла
     screen.bgpic('map.gif')
+    # загружаем изображение станции из файла
     screen.register_shape('iss.gif')
+    # присваиваем переменной iss значение объекта Turtle
     iss = turtle.Turtle()
+    # придаём переменной вид изображения станции из файла
     iss.shape('iss.gif')
-    iss.setheading(45)
+    # выключаем функцию рисование следа от объекта Turtle()
     iss.penup()
 
+    # запускаем бесконечный цикл
     while True:
-        # загружаем текущий статус ISS в реальном времени
+        # прописываес адрес для запроса о текущем положении МКС
         url = 'http://api.open-notify.org/iss-now.json'
+        # объявляем переменную и сохраняем в неё ответ
         res = urllib.request.urlopen(url)
+        # переводим ответ в JSON и читаем
         result = json.loads(res.read())
 
         # извлекаем локацию станции
         location = result['iss_position']
+        # извлекаем только широту станции
         lat = location['latitude']
+        # извлекаем только долготу станции
         lon = location['longitude']
 
+        # Получение текущего времени
+        current_time = time.strftime("%Y-%m-%d %H:%M:%S")
+        # Вывод на экран
+        print("\nДата и время:", current_time)
         # выводим широту и долготу в терминал
         lat = float(lat)
         lon = float(lon)
-        print(f'\nШирота: {str(lat)}')
-        print(f'\nДолгота: {str(lon)}')
+        print(f'Широта: {str(lat)}')
+        print(f'Долгота: {str(lon)}')
 
         # обновляем локация станции на карте
         iss.goto(lon, lat)
@@ -74,5 +87,5 @@ def main():
         # обновляем каждые 5 секунд
         time.sleep(5)
 
-
+# запускаем программу
 main()
