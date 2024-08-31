@@ -1,9 +1,17 @@
+# добавляем модуль для работы с JSON-форматом
 import json
+# добавляем модуль рисования
 import turtle
+# добавляем модуль для HTTP-запросов
 import urllib.request
+# добавляем модуль для работы со временем
 import time
+# добавляем модуль для открытия URL-адресов по умолчанию
 import webbrowser
+# добавляем модуль геокодирования и перевода адресов в координаты
 import geocoder
+# модуль для использования возможностей операционной системы
+import os
 
 
 def main():
@@ -11,7 +19,7 @@ def main():
     url = 'http://api.open-notify.org/astros.json'
     # открываем URL, используя urllib.request
     res = urllib.request.urlopen(url)
-    # загружаем и читаум json-файл
+    # загружаем и читаем json-файл
     result = json.loads(res.read())
     # создаём текстовый файл с именами членов экипажа
     file = open('iss.txt', 'w')
@@ -24,7 +32,11 @@ def main():
     file.write(f'\nВаши текущие широта и долгота: {str(g.latlng)}')
     file.close()
 
-    webbrowser.open('iss.txt')
+    # получаем абсолютный путь к файлу
+    file_path = os.path.abspath('iss.txt')
+    # открываем файл браузером
+    # это будет выглядеть как обычный текстовый файл
+    webbrowser.open(f'file://{file_path}')
 
     # устанавливем карту мира
     screen = turtle.Screen()
