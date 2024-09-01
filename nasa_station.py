@@ -1,44 +1,46 @@
 # добавляем модуль для работы с JSON-форматом
 import json
-# добавляем модуль рисования
-import turtle
 # добавляем модуль для HTTP-запросов
 import urllib.request
+# добавляем модуль рисования
+import turtle
+# модуль для использования возможностей операционной системы
+import os
 # добавляем модуль для работы со временем
 import time
 # добавляем модуль для открытия URL-адресов по умолчанию
 import webbrowser
-# модуль для использования возможностей операционной системы
-import os
+# импортируем типы данных для аннотации типов
+from typing import Dict, List, Any
+from http.client import HTTPResponse
 
 
 def main():
     # задаём адрес для запроса списка космонавтов
-    url = 'http://api.open-notify.org/astros.json'
+    url: str = 'http://api.open-notify.org/astros.json'
     # открываем URL, используя urllib.request
-    res = urllib.request.urlopen(url)
+    res: HTTPResponse = urllib.request.urlopen(url)
     # загружаем и читаем json-файл
-    result = json.loads(res.read())
+    result: Dict[str, Any] = json.loads(res.read())
     # создаём текстовый файл с именами членов экипажа
-    file = open('iss.txt', 'w')
 
     # открываем файл для записи
     with open('iss.txt', 'w') as file:
         # добавляем запись
         file.write(f'В настоящий момент на МКС {str(result["number"])} астронавтов:\n\n')
         # получаем список имён космонавтов
-        people = result['people']
+        people: List[Dict[str, str]] = result['people']
         # для каждого человека в списке выводим его имя
         for person in people:
             file.write(person['name'] + '\n')
 
     # получаем абсолютный путь к файлу
-    file_path = os.path.abspath('iss.txt')
+    file_path: str = os.path.abspath('iss.txt')
     # открываем файл в отдельном окне
     webbrowser.open(f'file://{file_path}')
 
     # устанавливем карту мира
-    screen = turtle.Screen()
+    screen: turtle.Screen = turtle.Screen()
     # устанавливаем размеры окна
     screen.setup(1280, 720)
     # устанавливаем систему координат для экрана, аналогичную с координатами Земли
@@ -58,21 +60,21 @@ def main():
     # запускаем бесконечный цикл
     while True:
         # прописываес адрес для запроса о текущем положении МКС
-        url = 'http://api.open-notify.org/iss-now.json'
+        url: str = 'http://api.open-notify.org/iss-now.json'
         # объявляем переменную и сохраняем в неё ответ
-        res = urllib.request.urlopen(url)
+        res: HTTPResponse = urllib.request.urlopen(url)
         # переводим ответ в JSON и читаем
-        result = json.loads(res.read())
+        result: Dict[str, Dict[str, str]] = json.loads(res.read())
 
         # извлекаем локацию станции
-        location = result['iss_position']
+        location: Dict[str, str] = result['iss_position']
         # извлекаем только широту станции
-        lat = location['latitude']
+        lat: float = float(location['latitude'])
         # извлекаем только долготу станции
-        lon = location['longitude']
+        lon: float = float(location['longitude'])
 
         # Получение текущего времени
-        current_time = time.strftime("%Y-%m-%d %H:%M:%S")
+        current_time: str = time.strftime("%Y-%m-%d %H:%M:%S")
         # Вывод на экран
         print("\nДата и время:", current_time)
         # переводим широту и долготу в числа с плавающей запятой
