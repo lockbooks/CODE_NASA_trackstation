@@ -15,6 +15,7 @@ from typing import Dict, List, Any
 from http.client import HTTPResponse
 
 
+# пишем основную и единственную функцию
 def main():
     # задаём адрес для запроса списка космонавтов
     url: str = 'http://api.open-notify.org/astros.json'
@@ -22,8 +23,8 @@ def main():
     res: HTTPResponse = urllib.request.urlopen(url)
     # загружаем и читаем json-файл
     result: Dict[str, Any] = json.loads(res.read())
-    # создаём текстовый файл с именами членов экипажа
 
+    # создаём текстовый файл с именами членов экипажа
     # открываем файл для записи
     with open('iss.txt', 'w') as file:
         # добавляем запись
@@ -39,7 +40,7 @@ def main():
     # открываем файл в отдельном окне
     webbrowser.open(f'file://{file_path}')
 
-    # устанавливем карту мира
+    # создаём главное окно для графической работы
     screen: turtle.Screen = turtle.Screen()
     # устанавливаем размеры окна
     screen.setup(1280, 720)
@@ -54,7 +55,7 @@ def main():
     iss = turtle.Turtle()
     # придаём переменной вид изображения станции из файла
     iss.shape('iss.gif')
-    # выключаем функцию рисование следа от объекта Turtle()
+    # выключаем функцию рисования следа от объекта Turtle()
     iss.penup()
 
     # запускаем бесконечный цикл
@@ -77,12 +78,9 @@ def main():
         current_time: str = time.strftime("%Y-%m-%d %H:%M:%S")
         # Вывод на экран
         print("\nДата и время:", current_time)
-        # переводим широту и долготу в числа с плавающей запятой
-        lat = float(lat)
-        lon = float(lon)
         # выводим широту и долготу в терминал
-        print(f'Широта: {str(lat)}')
-        print(f'Долгота: {str(lon)}')
+        print(f'Широта: {lat}')
+        print(f'Долгота: {lon}')
 
         # обновляем локация станции на карте
         iss.goto(lon, lat)
